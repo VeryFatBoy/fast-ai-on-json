@@ -1,0 +1,40 @@
+SHOW DATABASES;
+
+DROP DATABASE IF EXISTS new_transactions;
+CREATE DATABASE IF NOT EXISTS new_transactions;
+USE new_transactions;
+
+SHOW TABLES;
+
+DROP LINK new_transactions.link;
+
+CREATE LINK new_transactions.link AS MONGODB
+CONFIG '{"mongodb.hosts": "<primary>,<secondary>,<secondary>",
+        "collection.include.list": "new_transactions.*",
+        "mongodb.ssl.enabled": "true",
+        "mongodb.authsource": "admin",
+        "mongodb.members.auto.discover": "false"}'
+CREDENTIALS '{"mongodb.user": "<username>",
+            "mongodb.password": "<password>"}';
+
+CREATE TABLES AS INFER PIPELINE AS LOAD DATA LINK new_transactions.link '*' FORMAT AVRO;
+
+SHOW TABLES;
+
+SHOW PIPELINES;
+
+START ALL PIPELINES;
+
+SELECT COUNT(*) FROM custs;
+SELECT COUNT(*) FROM items;
+SELECT COUNT(*) FROM txs;
+
+DESCRIBE custs;
+DESCRIBE items;
+DESCRIBE txs;
+
+SELECT * FROM custs LIMIT 1;
+SELECT * FROM items LIMIT 1;
+SELECT * FROM txs LIMIT 1;
+
+-- STOP ALL PIPELINES;

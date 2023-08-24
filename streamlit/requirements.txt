@@ -1,0 +1,5 @@
+streamlit
+json
+openai
+pymongo
+struct

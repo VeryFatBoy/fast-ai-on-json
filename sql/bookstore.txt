@@ -1,0 +1,38 @@
+SHOW DATABASES;
+
+DROP DATABASE IF EXISTS bookstore;
+CREATE DATABASE IF NOT EXISTS bookstore;
+USE bookstore;
+
+SHOW TABLES;
+
+DROP LINK bookstore.link;
+
+CREATE LINK bookstore.link AS MONGODB
+CONFIG '{"mongodb.hosts": "<primary>,<secondary>,<secondary>",
+        "collection.include.list": "bookstore.*",
+        "mongodb.ssl.enabled": "true",
+        "mongodb.authsource": "admin",
+        "mongodb.members.auto.discover": "false"}'
+CREDENTIALS '{"mongodb.user": "<username>",
+            "mongodb.password": "<password>"}';
+
+CREATE TABLES AS INFER PIPELINE AS LOAD DATA LINK bookstore.link '*' FORMAT AVRO;
+
+SHOW TABLES;
+
+SHOW PIPELINES;
+
+START ALL PIPELINES;
+
+SELECT COUNT(*) FROM books;
+
+DESCRIBE books;
+DESCRIBE books_with_embedding;
+DESCRIBE meta;
+
+SELECT * FROM books LIMIT 1;
+SELECT * FROM books_with_embedding LIMIT 1;
+SELECT * FROM meta LIMIT 1;
+
+-- STOP ALL PIPELINES;
