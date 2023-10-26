@@ -8,7 +8,6 @@ import json
 import openai
 import pymongo
 import struct
-from bson import ObjectId
 
 # Constants.
 
@@ -34,8 +33,6 @@ def create_embedding(data: str | dict) -> list[float]:
     global create_embedding_retries
 
     if type(data) is dict:
-        parsed_id = json.loads(data["_id"])["$oid"]
-        data["_id"] = ObjectId(parsed_id)
         data = json.dumps(data, cls=JSONEncoder)
 
     try:
