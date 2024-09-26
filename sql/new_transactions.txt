@@ -37,4 +37,18 @@ SELECT * FROM custs LIMIT 1;
 SELECT * FROM items LIMIT 1;
 SELECT * FROM txs LIMIT 1;
 
--- STOP ALL PIPELINES;
+-- Cleanup
+
+STOP ALL PIPELINES;
+
+DROP PIPELINE `new_transactions.custs`;
+DROP PIPELINE `new_transactions.items`;
+DROP PIPELINE `new_transactions.txs`;
+
+DROP LINK new_transactions.link;
+
+DROP TABLE IF EXISTS custs;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS txs;
+
+DROP DATABASE IF EXISTS new_transactions;
