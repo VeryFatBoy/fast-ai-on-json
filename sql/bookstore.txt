@@ -35,4 +35,16 @@ SELECT * FROM books LIMIT 1;
 SELECT * FROM books_with_embedding LIMIT 1;
 SELECT * FROM meta LIMIT 1;
 
--- STOP ALL PIPELINES;
+-- Cleanup
+
+STOP ALL PIPELINES;
+
+DROP PIPELINE `bookstore.books`;
+
+DROP LINK bookstore.link;
+
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS books_with_embedding;
+DROP TABLE IF EXISTS meta;
+
+DROP DATABASE IF EXISTS bookstore;
