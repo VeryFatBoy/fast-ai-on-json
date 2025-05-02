@@ -84,7 +84,7 @@ embeddingsCollection = db[EMBEDDINGS_COLLECTION_NAME]
 
 create_embedding_retries = 0
 
-st.image("images/book-open-cover.png", use_column_width = False)
+st.image("images/book-open-cover.png", use_container_width = False)
 st.subheader("Book Recommendations")
 
 st.sidebar.subheader("Enter your request")
